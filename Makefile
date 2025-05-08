@@ -3,7 +3,7 @@ INCLUDE_DIR=./include
 BIN_DIR=./bin
 SRC_DIR=./src
 # See here for info on `-D_POSIX_C_SOURCE=200809L`: https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html#index-_005fPOSIX_005fC_005fSOURCE
-CFLAGS = -D_POSIX_C_SOURCE=200809L -O3 -g3 -I$(INCLUDE_DIR) -Wall -Wextra -Wpedantic -Werror -Wshadow -Wformat=2 -Wconversion -Wunused-parameter -std=c23
+CFLAGS = -D_POSIX_C_SOURCE=200809L -O3 -g3 -I$(INCLUDE_DIR) -Wall -Wextra -Wpedantic -Werror -Wshadow -Wformat=2 -Wconversion -Wunused-parameter $(STD_FLAG)
 .DEFAULT_GOAL := all
 .PHONY: clean clean_all compile_commands.json
 
@@ -25,3 +25,8 @@ clean:
 
 clean_all:
 	$(RM) -r $(BIN_DIR) compile_commands.json
+
+STD_FLAG := $(shell \
+  echo 'int main(void){return 0;}' | \
+  $(CC) -x c -std=c23 -o /dev/null - >/dev/null 2>&1 && echo -std=c23 || echo -std=c2x)
+

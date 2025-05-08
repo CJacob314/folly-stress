@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 		{"num-chunks", required_argument, NULL, 'n'},
 		{"chunk-size", required_argument, NULL, 's'},
 		{"iterations", required_argument, NULL, 'i'},
-		{}
+		{0}
 	};
 
 	while ((opt = getopt_long(argc, argv, "hm:n:s:i:", long_options, NULL)) != -1) {
